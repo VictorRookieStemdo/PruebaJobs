@@ -1,0 +1,33 @@
+name: Auto Commit Workflow
+
+on:
+  workflow_dispatch:
+
+jobs:
+  auto-commit-job:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout del repositorio
+        uses: actions/checkout@v3
+
+      - name: Mostrar fecha y hora actual
+        run: date
+
+      - name: Crear un archivo de texto
+        run: echo "Este archivo fue creado automáticamente." > archivo_creado.txt
+
+      - name: Listar archivos en el directorio actual
+        run: ls -la
+
+      - name: Configurar Git
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "github-actions[bot]@users.noreply.github.com"
+
+      - name: Hacer commit y push con GITHUB_TOKEN
+        env:
+         GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          git add .
+          git commit -m "Add archivo_creado.txt desde workflow"
+          git push
