@@ -27,7 +27,8 @@ jobs:
 
       - name: Hacer commit y push con GITHUB_TOKEN
         env:
-         GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        run: |
           git add .
-          git commit -m "Add archivo_creado.txt desde workflow"
+          git commit -m "Add archivo_creado.txt desde workflow" || echo "Nada que commitear"
           git push
